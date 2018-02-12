@@ -24,13 +24,14 @@ class OrderBookError(Exception):
 
 class OrderBook(WebSocketFeedListener):
     def __init__(self, product_ids='ETH-USD', api_key=None, api_secret=None,
-                 passphrase=None, use_heartbeat=False,
+                 passphrase=None, ws_url=None, use_heartbeat=False,
                  trade_log_file_path=None):
 
         super().__init__(product_ids=product_ids,
                          api_key=api_key,
                          api_secret=api_secret,
                          passphrase=passphrase,
+                         ws_url=ws_url,
                          use_heartbeat=use_heartbeat,
                          trade_log_file_path=trade_log_file_path)
 

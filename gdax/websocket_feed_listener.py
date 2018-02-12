@@ -20,7 +20,7 @@ from abc import ABC, abstractmethod
 
 class WebSocketFeedListener(ABC):
     def __init__(self, product_ids='ETH-USD', channels=None, api_key=None, api_secret=None,
-                 passphrase=None, use_heartbeat=False,
+                 passphrase=None, ws_url=None, use_heartbeat=False,
                  trade_log_file_path=None):
         if api_key is not None:
             self._authenticated = True
@@ -48,10 +48,13 @@ class WebSocketFeedListener(ABC):
         self._ws_connect = None
         self._ws = None
 
+        if ws_url == None:
+            self.ws_url = 'wss://ws-feed.gdax.com'
+
     async def _init(self):
         self._ws_session = aiohttp.ClientSession()
         self._ws_connect = self._ws_session.ws_connect(
-            'wss://ws-feed.gdax.com')
+            self.ws_url)
         self._ws = await self._ws_connect.__aenter__()
 
         # subscribe
